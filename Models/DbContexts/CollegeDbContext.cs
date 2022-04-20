@@ -7,6 +7,8 @@ namespace Models.DbContexts
 {
     public class CollegeDbContext : DbContext
     {
+        public DbSet<DepartmentModel> Department { get; set; }
+
         public CollegeDbContext()
         {
         }
