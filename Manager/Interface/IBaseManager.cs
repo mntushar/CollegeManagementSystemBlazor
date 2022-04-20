@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Manager.Interface
 {
-    interface IBaseManager<T> where T : class
+    public interface IBaseManager<T> where T : class
     {
         public bool Add(T entity);
         public bool Update(T entity);

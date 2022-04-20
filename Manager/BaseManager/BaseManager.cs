@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Manager.BaseManager
 {
-    class BaseManager<T> : IBaseManager<T> where T : class
+    public class BaseManager<T> : IBaseManager<T> where T : class
     {
         private IBaseRepositorie<T> _baseRepositorie;
 
