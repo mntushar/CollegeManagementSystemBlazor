@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Repositories
 {
-    class DepartmentRepositorie : BaseRepositorie<DepartmentModel>, IDepartmentRepositorie
+    public class DepartmentRepositorie : BaseRepositorie<DepartmentModel>, IDepartmentRepositorie
     {
     }
 }

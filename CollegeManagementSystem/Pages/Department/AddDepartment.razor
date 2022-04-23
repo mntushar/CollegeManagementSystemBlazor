@@ -1,0 +1,18 @@
+﻿@page "/Department/Add"
+
+@inherits AddDepartmentBase
+
+
+<h3>@componentTitle</h3>
+
+<EditForm Model="@departmentModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="DeptName">Department Name</label>
+        <InputText class="form-control" id="name" @bind-Value="departmentModel.DeptName" />
+        <ValidationMessage For="() => departmentModel.DeptName" />
+    </div>
+
+    <button type="submit" class="btn btn-secondary">@submitType</button>
+</EditForm>

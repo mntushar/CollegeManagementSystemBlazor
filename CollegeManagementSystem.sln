@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollegeManagementSystem", "CollegeManagementSystem\CollegeManagementSystem.csproj", "{2B3AC732-F510-4FB7-86DC-761E168F21B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{22BD963E-5714-42B4-8990-909725ADE6B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{22BD963E-5714-42B4-8990-909725ADE6B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{6590199C-9669-46A9-A589-43FABF3CB0A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{6590199C-9669-46A9-A589-43FABF3CB0A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager\Manager.csproj", "{74D81201-A8BA-402D-8AD7-85C366276218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Manager\Services.csproj", "{74D81201-A8BA-402D-8AD7-85C366276218}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

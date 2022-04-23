@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Repositories.BaseRepositorie
 {
-    class BaseRepositorie<T> : IBaseRepositorie<T> where T : class
+    public class BaseRepositorie<T> : IBaseRepositorie<T> where T : class
     {
         protected CollegeDbContext _db;
         private DbSet<T> Table
