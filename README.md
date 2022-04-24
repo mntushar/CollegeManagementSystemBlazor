@@ -13,7 +13,8 @@
 - JS.
 
 ■ Design principle:<br />
-- SOLID
+- SOLID Principle
+- Onion Architecture
 
 ■ Using helper tools:<br />
 - AutoFact
