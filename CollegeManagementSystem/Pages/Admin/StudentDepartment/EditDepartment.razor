@@ -1,0 +1,68 @@
+﻿@page "/admin/Department/{id:int}/edit"
+
+@using Models
+@using Services.Interface;
+
+@inject IDepartmentManager DepartmentManager
+@inject NavigationManager NavigationManager
+
+<ContentHeader Title="Department" />
+<div class="content">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Update Department</h3>
+        </div>
+        <EditForm Model="@Department" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="DeptName">Department Name</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <InputText class="form-control" id="name" @bind-Value="Department.DeptName" />
+                        <ValidationMessage For="() => Department.DeptName" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        @if (errorMassage != null) 
+                        {
+                            <p class="text-danger">*@errorMassage</p>
+                        }
+
+                    </div>
+                </div>
+                
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-secondary">Update</button>
+                    <a class="float-right" href="/admin/department/list">Department List</a>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private string errorMassage { get; set; }
+
+    private DepartmentModel Department { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Department = DepartmentManager.Get(Id);
+    }
+
+    private void HandleValidSubmit()
+    {
+        bool isUpdate = DepartmentManager.Update(Department);
+        if (isUpdate) NavigationManager.NavigateTo("admin/department/list");
+        else errorMassage = "Please enter valid information";
+
+    }
+
+}

@@ -1,16 +1,16 @@
 ﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <NavLink href="/admin" class="brand-link">
+        <img src="/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">M N Tushar</span>
-    </a>
+    </NavLink>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">M N Tushar</a>
@@ -46,16 +46,16 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a routerLink="/admin" class="nav-link">
+                            <NavLink href="/admin/Department/List" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Department List</p>
-                            </a>
+                            </NavLink>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/admin" class="nav-link">
+                            <NavLink href="/admin/Department/Add" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Department List</p>
-                            </a>
+                                <p>Add Department</p>
+                            </NavLink>
                         </li>
                     </ul>
                 </li>

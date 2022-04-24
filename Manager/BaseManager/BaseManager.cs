@@ -1,10 +1,10 @@
-﻿using Manager.Interface;
+﻿using Services.Interface;
 using Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Manager.BaseManager
+namespace Services.BaseManager
 {
     public class BaseManager<T> : IBaseManager<T> where T : class
     {

@@ -1,12 +1,12 @@
-﻿using Manager.BaseManager;
-using Manager.Interface;
+﻿using Services.BaseManager;
+using Services.Interface;
 using Models;
 using Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Manager
+namespace Services
 {
     public class DepartmentManager : BaseManager<DepartmentModel>, IDepartmentManager
     {

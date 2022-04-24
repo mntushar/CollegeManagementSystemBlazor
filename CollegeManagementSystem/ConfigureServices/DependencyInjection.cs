@@ -1,5 +1,5 @@
-﻿using Manager;
-using Manager.Interface;
+﻿using Services;
+using Services.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
 using Repositories.Interface;

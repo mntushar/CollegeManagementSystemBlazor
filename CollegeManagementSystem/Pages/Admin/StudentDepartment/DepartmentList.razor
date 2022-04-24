@@ -1,0 +1,104 @@
+﻿@page "/admin/department/list"
+
+@using Services.Interface
+@using Models
+
+@inject IDepartmentManager DepartmentManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime js
+
+<ContentHeader Title="Department" />
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="card-title">Department List</h3>
+                </div>
+                <div class="col-6 text-right">
+                    @*@Html.ActionLink("Create New", "Create", "Department")*@
+                </div>
+            </div>
+        </div>
+        @if (departments == null)
+        {
+            <i class="fa fa-circle-o-notch fa-spin fa-5x" style="font-size:24px"></i>
+        }
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div id="jsGrid1" class="jsgrid" style="position: relative; height: 100%; width: 100%;">
+                <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                    <table class="jsgrid-table">
+                        <tr class="jsgrid-header-row">
+                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 150px;">Department Name</th>
+                            <th class="jsgrid-header-cell jsgrid-align-right jsgrid-header-sortable" style="width: 50px;">Action</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="jsgrid-grid-body">
+                    <table class="jsgrid-table">
+                        <tbody>
+                            @foreach (var dept in departments)
+                            {
+                                <tr class="jsgrid-row">
+
+                                    <td class="jsgrid-cell" style="width: 150px;">
+                                        @dept.DeptName
+                                    </td>
+                                    <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">
+                                        <a href="/admin/Department/@dept.Id/edit">Edit</a> |
+                                        <a href="/admin/Department/@dept.Id/details">Details</a> |
+                                        <a role="button" class="text-danger" @onclick="(() => DeleteDepartment(dept.Id))">Delete</a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="jsgrid-pager-container">
+                    <div class="jsgrid-pager">
+                        Pages: <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">First</a></span>
+                        <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">Prev</a></span> <span class="jsgrid-pager-page jsgrid-pager-current-page">1</span>
+                        <span class="jsgrid-pager-page"><a href="javascript:void(0);">2</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">3</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">4</a></span>
+                        <span class="jsgrid-pager-page"><a href="javascript:void(0);">5</a></span> <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Next</a></span>
+                        <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Last</a></span> &nbsp;&nbsp; 1 of 5
+                    </div>
+                </div>
+                <div class="jsgrid-load-shader" style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
+                <div class="jsgrid-load-panel" style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please, wait...</div>
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+
+
+@code {
+    private ICollection<DepartmentModel> departments { get; set; }
+
+    protected override void OnInitialized()
+    {
+        departments = DepartmentManager.GetAll();
+    }
+
+    public async Task DeleteDepartment(int id)
+    {
+        bool isCongirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete?");
+        if (isCongirm)
+        {
+            var dept = DepartmentManager.Get(id);
+            if (dept != null)
+            {
+                bool isDelete = DepartmentManager.Remove(dept);
+                if (isDelete) OnInitialized();
+            }
+        }
+
+    }
+
+}

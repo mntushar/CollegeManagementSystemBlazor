@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Manager.Interface
+namespace Services.Interface
 {
     public interface IBaseManager<T> where T : class
     {
