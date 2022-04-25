@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Models.Helper;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Interface
 {
@@ -11,5 +14,6 @@ namespace Services.Interface
         public bool Remove(T entity);
         public T Get(int? id);
         public ICollection<T> GetAll();
+        public List<T> GetAllList();
     }
 }

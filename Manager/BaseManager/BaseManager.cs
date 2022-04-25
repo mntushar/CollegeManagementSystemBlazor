@@ -2,7 +2,9 @@
 using Repositories.Interface;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Models.Helper;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.BaseManager
 {
@@ -38,6 +40,11 @@ namespace Services.BaseManager
         public virtual bool Update(T entity)
         {
             return _baseRepositorie.Update(entity);
+        }
+
+        public List<T> GetAllList()
+        {
+            return _baseRepositorie.GetAllList();
         }
     }
 }

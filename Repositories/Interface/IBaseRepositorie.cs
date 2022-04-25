@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Models.Helper;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories.Interface
 {
@@ -11,5 +13,6 @@ namespace Repositories.Interface
         public bool Remove(T entity);
         public T Get(int? id);
         public ICollection<T> GetAll();
+        public List<T> GetAllList();
     }
 }

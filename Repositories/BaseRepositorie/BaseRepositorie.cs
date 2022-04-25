@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.DbContexts;
+using Models.Helper;
 using Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Repositories.BaseRepositorie
 {
@@ -45,6 +46,11 @@ namespace Repositories.BaseRepositorie
         }
 
         public virtual ICollection<T> GetAll()
+        {
+            return Table.ToList();
+        }
+
+        public virtual List<T> GetAllList()
         {
             return Table.ToList();
         }
