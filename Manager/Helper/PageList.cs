@@ -8,7 +8,7 @@ namespace Services.Helper
     {
         public static List<T> GetPageList(List<T> list, int page, int quantityPerPage)
         {
-            return list.Skip(page * quantityPerPage).Take(quantityPerPage).ToList();
+            return list.Skip(page - 1 * quantityPerPage).Take(quantityPerPage).ToList();
         }
 
         public static double GetTotalPageList(List<T> list, int quantityPerPage)

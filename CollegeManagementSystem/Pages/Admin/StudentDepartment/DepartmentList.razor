@@ -94,7 +94,6 @@
     protected async Task LoadDepartment(int page = 1, int quantityPerPage = 3)
     {
         var dept = await DepartmentManager.GetAllList();
-        //await Task.Delay(5000000);
         totalPageQuantity = (int)PageList<DepartmentModel>.GetTotalPageList(dept, quantityPerPage); ;
         departments = PageList<DepartmentModel>.GetPageList(dept, page, quantityPerPage);
     }
