@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\AdminShared\ControlSidebar.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.16">
@@ -21,6 +25,18 @@
 
   <ItemGroup>
     <Folder Include="Pages\Admin\Student\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\AdminShared\ControlSidebar.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\AdminShared\ControlSidebar.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\AdminShared\ControlSidebar.razor" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿#blazor-error-ui {
+﻿@import url('ComponentStyleSheet.css');
+
+#blazor-error-ui {
     background: lightyellow;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
@@ -16,3 +18,38 @@
     right: 0.75rem;
     top: 0.5rem;
 }
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-right: 16px solid green;
+    border-bottom: 16px solid red;
+    border-left: 16px solid pink;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: 150px 150px 150px 400px;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+

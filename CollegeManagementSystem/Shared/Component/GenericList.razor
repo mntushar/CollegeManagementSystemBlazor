@@ -2,29 +2,38 @@
 
 @if (Elements == null)
 {
-    <i class="fa fa-circle-o-notch fa-spin fa-5x" style="font-size:24px"></i>
-    @*if (NullTemplate == null)
+    if (NullTemplate == null)
     {
-        <text>Loading...</text> 
+        <div class="card">
+            <div class="card-header">
+                <div class="loader"></div>
+            </div>
+        </div>
     }
     else
     {
         @NullTemplate 
-    }*@
+    }
 }
-@*else if (Elements.Count == 0)
+else if (Elements.Count == 0)
 {
     if (EmptyTemplate == null)
     {
-        <text>There are not records in the database</text> 
+        <div class="content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
         @EmptyTemplate 
     }
-}*@
-@*else
-{
+}
+else
+{ 
     if (WithElementsTemplate != null)
     {
         @WithElementsTemplate 
@@ -36,13 +45,13 @@
             @WithIndividualElementTemplate(element)
         }
     }
-}*@
+}
 
 
 @code { 
     [Parameter] public List<TElement> Elements { get; set; }
-    //[Parameter] public RenderFragment NullTemplate { get; set; }
-    //[Parameter] public RenderFragment EmptyTemplate { get; set; }
-    //[Parameter] public RenderFragment WithElementsTemplate { get; set; }
-    //[Parameter] public RenderFragment<TElement> WithIndividualElementTemplate { get; set; } 
+    [Parameter] public RenderFragment NullTemplate { get; set; }
+    [Parameter] public RenderFragment EmptyTemplate { get; set; }
+    [Parameter] public RenderFragment WithElementsTemplate { get; set; }
+    [Parameter] public RenderFragment<TElement> WithIndividualElementTemplate { get; set; }
 }
