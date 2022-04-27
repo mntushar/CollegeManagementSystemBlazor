@@ -1,7 +1,4 @@
-﻿using Models.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Repositories.Interface
@@ -13,6 +10,6 @@ namespace Repositories.Interface
         public bool Remove(T entity);
         public T Get(int? id);
         public ICollection<T> GetAll();
-        public List<T> GetAllList();
+        public Task<List<T>> GetAllList();
     }
 }

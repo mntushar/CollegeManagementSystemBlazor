@@ -1,0 +1,73 @@
+﻿@page "/admin/department/list/pagination"
+
+@using Services.Interface
+@using Models
+
+@inject IDepartmentManager DepartmentManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime js
+
+<ContentHeader Title="Department" />
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="card-title">Department List</h3>
+                </div>
+                <div class="col-6 text-right">
+                    <a href="/admin/Department/Add">Create Department</a>
+                </div>
+            </div>
+        </div>
+        @if (departments == null)
+        {
+            <i class="fa fa-circle-o-notch fa-spin fa-5x" style="font-size:24px"></i>
+        }
+        <div class="card-body">
+            <GridView Items="departments">
+                <GridColumns>
+                    <td class="jsgrid-header-cell jsgrid-header-sortable text-center" style="width: 120px;">Department name</td>
+                    <td class="jsgrid-header-cell jsgrid-align-right jsgrid-header-sortable text-center" style="width: 80px;">Action</td>
+                </GridColumns>
+
+                <GridRow Context="department">
+                    <td class="jsgrid-cell" style="width: 120px;">@department.DeptName</td>
+                    <td class="jsgrid-cell jsgrid-align-center" style="width: 80px;">
+                        <a href="/admin/Department/@department.Id/edit">Edit</a> |
+                        <a href="/admin/Department/@department.Id/details">Details</a> |
+                        <a role="button" class="text-danger" @onclick="(() => DeleteDepartment(department.Id))">Delete</a>
+                    </td>
+                </GridRow>
+            </GridView>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    private List<DepartmentModel> departments { get; set; }
+    public int pageNumber = 1;
+    public int pageSize = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        departments = await DepartmentManager.GetAllList();
+    }
+
+    public async Task DeleteDepartment(int id)
+    {
+        bool isCongirm = await js.InvokeAsync<bool>("confirm", "Do you want to delete?");
+        if (isCongirm)
+        {
+            var dept = DepartmentManager.Get(id);
+            if (dept != null)
+            {
+                bool isDelete = DepartmentManager.Remove(dept);
+                if (isDelete) await OnInitializedAsync();
+            }
+        }
+
+    }
+
+}

@@ -2,57 +2,99 @@
 
 @using Services.Interface
 @using Models
+@using Services.Helper
 
 @inject IDepartmentManager DepartmentManager
 @inject NavigationManager NavigationManager
 @inject IJSRuntime js
 
 <ContentHeader Title="Department" />
-<section class="content">
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-6">
-                    <h3 class="card-title">Department List</h3>
-                </div>
-                <div class="col-6 text-right">
-                   <a href="/admin/Department/Add">Create Department</a>
+<GenericList Elements="departments">
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="card-title">Department List</h3>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="/admin/Department/Add">Create Department</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        @if (departments == null)
-        {
-            <i class="fa fa-circle-o-notch fa-spin fa-5x" style="font-size:24px"></i>
-        }
-        <div class="card-body">
-            <GridView Items="departments">
-                <GridColumns>
-                    <td class="jsgrid-header-cell jsgrid-header-sortable text-center" style="width: 120px;">Department name</td>
-                    <td class="jsgrid-header-cell jsgrid-align-right jsgrid-header-sortable text-center" style="width: 80px;">Action</td>
-                </GridColumns>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div id="jsGrid1" class="jsgrid" style="position: relative; height: 100%; width: 100%;">
+                    <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                        <table class="jsgrid-table">
+                            <tr class="jsgrid-header-row">
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 150px;">Department Name</th>
+                                <th class="jsgrid-header-cell jsgrid-align-right jsgrid-header-sortable" style="width: 50px;">Action</th>
+                            </tr>
+                        </table>
+                    </div>
 
-                <GridRow Context="department">
-                    <td class="jsgrid-cell" style="width: 120px;">@department.DeptName</td>
-                    <td class="jsgrid-cell jsgrid-align-center" style="width: 80px;">
-                        <a href="/admin/Department/@department.Id/edit">Edit</a> |
-                        <a href="/admin/Department/@department.Id/details">Details</a> |
-                        <a role="button" class="text-danger" @onclick="(() => DeleteDepartment(department.Id))">Delete</a>
-                    </td>
-                </GridRow>
-            </GridView>
-        </div>
-    </div>
-</section>
+                    <div class="jsgrid-grid-body">
+                        <table class="jsgrid-table">
+                            <tbody>
+                                @foreach (var dept in departments)
+                                {
+                                    <tr class="jsgrid-row">
 
+                                        <td class="jsgrid-cell" style="width: 150px;">
+                                            @dept.DeptName
+                                        </td>
+                                        <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">
+                                            <a href="/admin/Department/@dept.Id/edit">Edit</a> |
+                                            <a href="/admin/Department/@dept.Id/details">Details</a> |
+                                            <a role="button" class="text-danger" @onclick="(() => DeleteDepartment(dept.Id))">Delete</a>
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="jsgrid-pager-container">
+                        <div class="jsgrid-pager">
+                            <Pagination TotaPagesQuantity="totalPageQuantity" CurrentPage="currentPage" Radius="2"
+                                        SelectedPage="SelectedPage"></Pagination>
+                        </div>
+                    </div>
+                    <div class="jsgrid-load-shader" style="display: none; position: absolute; inset: 0px; z-index: 1000;"></div>
+                    <div class="jsgrid-load-panel" style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please, wait...</div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </section>
+</GenericList>
 
 @code {
     private List<DepartmentModel> departments { get; set; }
-    public int pageNumber = 1;
-    public int pageSize = 10;
+    private int totalPageQuantity;
+    private int currentPage = 1;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        departments = DepartmentManager.GetAllList();
+        await LoadDepartment();
+    }
+
+    private async Task SelectedPage(int page)
+    {
+        currentPage = page;
+        await LoadDepartment(page);
+    }
+
+    async Task LoadDepartment(int page = 1, int quantityPerPage = 3)
+    {
+        var dept = await DepartmentManager.GetAllList();
+        totalPageQuantity = (int)PageList<DepartmentModel>.GetTotalPageList(dept, quantityPerPage); ;
+
+        departments = PageList<DepartmentModel>.GetPageList(dept, page, quantityPerPage);
     }
 
     public async Task DeleteDepartment(int id)
@@ -64,7 +106,7 @@
             if (dept != null)
             {
                 bool isDelete = DepartmentManager.Remove(dept);
-                if (isDelete) OnInitialized();
+                if (isDelete) await LoadDepartment(currentPage);
             }
         }
 

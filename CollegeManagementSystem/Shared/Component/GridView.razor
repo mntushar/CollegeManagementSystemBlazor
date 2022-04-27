@@ -27,14 +27,14 @@
 <div>
     <button class="btn btn-secondary" @onclick="@(e => NavigateTo("first"))">@("<<")</button>
     <button class="btn btn-secondary" @onclick="@(e => NavigateTo("prev"))">Prev</button>
-    @for (int i = 0; i < PageNumber; i++)
+    @for (int i = 0; i < pageLen; i++)
     {
         var pageNumber = i;
+        if (i < pageLen && pageLen < CurrentPage) pageLen++;
         <button class="btn @(CurrentPage == pageNumber? "btn-dark":"btn-info")"
                 @onclick="@(e => UpdateList(pageNumber))">
             @(i + 1)
         </button>
-        if (pageNumber >= TotalPages) PageNumber++;
     }
     <button class="btn btn-secondary" @onclick="@(e => NavigateTo("next"))">Next</button>
     <button class="btn btn-secondary" @onclick="@(e => NavigateTo("last"))">@(">>")</button>
@@ -60,7 +60,7 @@
     [Parameter]
     public bool ReloadList { get; set; }
 
-    public int PageNumber = 3;
+    public int pageLen = 3;
 
     protected override void OnInitialized()
     {

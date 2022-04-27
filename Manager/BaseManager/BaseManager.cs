@@ -1,9 +1,6 @@
 ﻿using Services.Interface;
 using Repositories.Interface;
-using System;
 using System.Collections.Generic;
-using Models.Helper;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Services.BaseManager
@@ -42,9 +39,9 @@ namespace Services.BaseManager
             return _baseRepositorie.Update(entity);
         }
 
-        public List<T> GetAllList()
+        public virtual async Task<List<T>> GetAllList()
         {
-            return _baseRepositorie.GetAllList();
+            return await _baseRepositorie.GetAllList();
         }
     }
 }

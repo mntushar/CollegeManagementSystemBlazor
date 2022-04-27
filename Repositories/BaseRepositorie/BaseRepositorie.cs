@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.DbContexts;
-using Models.Helper;
 using Repositories.Interface;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,9 +48,9 @@ namespace Repositories.BaseRepositorie
             return Table.ToList();
         }
 
-        public virtual List<T> GetAllList()
+        public virtual async Task<List<T>> GetAllList()
         {
-            return Table.ToList();
+            return await Table.ToListAsync();
         }
     }
 }
