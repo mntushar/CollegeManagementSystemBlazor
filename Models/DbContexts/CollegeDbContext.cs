@@ -20,8 +20,9 @@ namespace Models.DbContexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string ConnectionString = "Server=MNTUSHAR;Database=CollegeManagemantSystem;Trusted_Connection=True;MultipleActiveResultSets=true;";
-            optionsBuilder
+            //string ConnectionString = "Server=MNTUSHAR;Database=CollegeManagemantSystem;Trusted_Connection=True;MultipleActiveResultSets=true;";
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=CollegeManagemantSystem;Trusted_Connection=True;MultipleActiveResultSets=true";
+        optionsBuilder
                 .UseLazyLoadingProxies()
                 .UseSqlServer(ConnectionString);
         }
