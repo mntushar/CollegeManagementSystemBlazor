@@ -1,0 +1,117 @@
+﻿@page "/admin/Student/Add"
+
+@using Services.Interface
+@using Models
+
+@inject NavigationManager NavigationManager
+@inject IStudentServices studentServices
+@inject IDepartmentManager departmentServices
+
+<ContentHeader Title="Student" />
+<GenericList Elements="Departments">
+    <WithElementsTemplate>
+        <div class="content">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Add Department</h3>
+                </div>
+                <EditForm Model="@Student" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label for="DeptName">Student Name</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <InputText class="form-control" id="name" @bind-Value="Student.Name" />
+                                <ValidationMessage For="() => Student.Name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label for="DeptName">Date of Birth</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <InputDate class="form-control" id="name" @bind-Value="Student.DateOfBirth" />
+                                <ValidationMessage For="() => Student.DateOfBirth" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label for="DeptName">Student Image</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <InputFile OnChange="@LoadImage" />
+                                <ValidationMessage For="() => Student.ProfileImage" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label for="DeptName">Student Department</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <InputSelect class="form-control" id="name" @bind-Value="Student.DeptId">
+                                    <option value="0">---Select Department---</option>
+                                    @foreach (var dept in Departments)
+                                    {
+                                        <option value="@dept.Id">@dept.DeptName</option>
+                                    }
+
+                                </InputSelect>
+                                <ValidationMessage For="() => Student.DeptId" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                @if (errorMassage != null)
+                                {
+                                    <p class="text-danger">*@errorMassage</p>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                        <a class="float-right" href="/admin/department/list">Department List</a>
+                    </div>
+                </EditForm>
+
+            </div>
+        </div>
+    </WithElementsTemplate>
+</GenericList>
+
+@code {
+    private StudentModel Student = new StudentModel();
+    private string errorMassage { get; set; }
+    private List<DepartmentModel> Departments { get; set; }
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool upload;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Departments = await departmentServices.GetAllList();
+    }
+
+    private async Task LoadImage(InputFileChangeEventArgs eventArgs)
+    {
+
+    }
+
+    protected void HandleValidSubmit()
+    {
+        bool isAdd = studentServices.Add(Student);
+        if (isAdd)
+        {
+            NavigationManager.NavigateTo("admin/department/list");
+        }
+        else
+        {
+            errorMassage = "Please enter valid information";
+        }
+    }
+}

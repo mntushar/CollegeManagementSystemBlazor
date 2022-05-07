@@ -15,6 +15,10 @@ namespace CollegeManagementSystem.ConfigureServices
             services.AddSingleton<IDepartmentManager, DepartmentManager>();
             services.AddSingleton<IDepartmentRepositorie, DepartmentRepositorie>();
 
+            //Student
+            services.AddSingleton<IStudentServices, StudentServices>();
+            services.AddSingleton<IStudentRepositore, StudentRepositore>();
+
             return services;
         }
     }
