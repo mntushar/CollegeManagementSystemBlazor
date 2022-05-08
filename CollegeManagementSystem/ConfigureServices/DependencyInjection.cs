@@ -3,6 +3,7 @@ using Services.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Repositories;
 using Repositories.Interface;
+using Services.Helper;
 
 namespace CollegeManagementSystem.ConfigureServices
 {

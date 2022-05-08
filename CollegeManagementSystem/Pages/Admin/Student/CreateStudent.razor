@@ -2,8 +2,11 @@
 
 @using Services.Interface
 @using Models
+@using Microsoft.Extensions.Logging
+@using System.IO;
 
 @inject NavigationManager NavigationManager
+@inject ILogger<CreateStudent> Logger
 @inject IStudentServices studentServices
 @inject IDepartmentManager departmentServices
 
@@ -13,7 +16,7 @@
         <div class="content">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Add Department</h3>
+                    <h3 class="card-title">Add Student</h3>
                 </div>
                 <EditForm Model="@Student" OnValidSubmit="@HandleValidSubmit">
                     <DataAnnotationsValidator />
@@ -38,7 +41,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-2">
-                                <label for="DeptName">Student Image</label>
+                                <label for="DeptName">Student Image(Maximum size is @maxFileSize Kb)</label>
                             </div>
                             <div class="col-sm-10">
                                 <InputFile OnChange="@LoadImage" />
@@ -88,9 +91,8 @@
     private StudentModel Student = new StudentModel();
     private string errorMassage { get; set; }
     private List<DepartmentModel> Departments { get; set; }
-    private long maxFileSize = 1024 * 15;
-    private int maxAllowedFiles = 3;
-    private bool upload;
+    private int maxFileSize = 1024 * 1024 * 5;
+    private bool imageUpload = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,19 +101,31 @@
 
     private async Task LoadImage(InputFileChangeEventArgs eventArgs)
     {
-
+        if (eventArgs.File.Size <= maxFileSize && eventArgs.File.Size > 0)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Upload/Images/Student", eventArgs.File.Name);
+            await using FileStream fs = new(filePath, FileMode.Create);
+            await eventArgs.File.OpenReadStream().CopyToAsync(fs);
+            Student.ProfileImage = filePath;
+            imageUpload = true;
+        }
+        else Logger.LogInformation("Image size is too long");
     }
 
     protected void HandleValidSubmit()
     {
-        bool isAdd = studentServices.Add(Student);
-        if (isAdd)
+        if (imageUpload)
         {
-            NavigationManager.NavigateTo("admin/department/list");
+            bool isAdd = studentServices.Add(Student);
+            if (isAdd)
+            {
+                NavigationManager.NavigateTo("admin/department/list");
+            }
+            else
+            {
+                errorMassage = "Please enter valid information";
+            }
         }
-        else
-        {
-            errorMassage = "Please enter valid information";
-        }
+        
     }
 }
